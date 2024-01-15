@@ -1,0 +1,32 @@
+.homepage-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.homepage-grid-notes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  max-width: 80%;
+  min-width: 400px;
+  height: auto;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  transition: transform 3s ease;
+}
+
+.homepage-buttonarchived{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 200px;
+  background-color: white;
+  border: transparent;
+  color: #242424;
+  cursor: pointer;
+}

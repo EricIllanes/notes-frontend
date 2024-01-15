@@ -1,0 +1,90 @@
+.cardnote-container {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  height: 350px;
+  background-color: #d2f9e8;
+  color: white;
+  margin: 10px;
+  border-radius: 15px;
+  justify-content: center;
+}
+.cardnote-header {
+  font-size: 20px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  color: #242424;
+  height: 30px;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.cardnote-tags{
+    color:#242424;
+    cursor: pointer;
+}
+
+.cardnote-body {
+  display: flex;
+  width: 85%;
+
+  align-self: center;
+  height: 250px;
+  align-items: center;
+  color: #242424;
+}
+
+.cardnote-footer {
+    width: 100%;
+    position: relative;
+justify-content: center;
+  display: flex;
+  height: 40px;
+  color: #242424;
+  align-items: center;
+  gap: 0 10px;
+}
+
+.archive-icon-container {
+  display: flex;
+  position: absolute;
+  right: 5px;
+  bottom: -10px;
+  flex-direction: row;
+  cursor: pointer;
+}
+
+.tooltip {
+  visibility: hidden;
+  width: 120px;
+  color: #d2f9e8;
+  background-color: #242424;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -70px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.archive-icon-container:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.archive-icon-delete{
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    cursor: pointer;
+}
+
+.archive-icon-delete:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+  }

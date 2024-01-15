@@ -1,0 +1,46 @@
+.formnote-form{
+    background-color: white;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr;
+    border-radius: 15px;
+    width: 500px;
+    height: 300px;
+    justify-content: center;
+    align-items: center;
+    margin: 15px;
+    box-shadow: 6px 6px 12px -3px rgba(0,0,0,0.1);
+}
+
+.formnote-form input, textarea{
+    display: flex;
+    width: 90%;
+    justify-self: center;
+}
+
+input{
+    height: 30px;
+    border-radius: 10px;
+    border-color: transparent;
+    background-color: #eef0f3;
+}
+
+textarea{
+        width: 90%;
+        max-width: 90%;
+        min-width: 90%;
+        height: 150px;
+        max-height: 150px;
+        min-height: 100px;
+        resize: vertical;
+        border: 1px solid #eef0f3;
+    
+}
+button {
+    border: transparent;
+    width: 100px;
+    justify-self: center;
+    margin-bottom: 10px;
+    height: 30px;
+    border-radius: 10px;
+}
