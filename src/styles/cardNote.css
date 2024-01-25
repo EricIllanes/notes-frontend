@@ -20,9 +20,9 @@
   align-items: center;
 }
 
-.cardnote-tags{
-    color:#242424;
-    cursor: pointer;
+.cardnote-tags {
+  color: #242424;
+  cursor: pointer;
 }
 
 .cardnote-body {
@@ -36,9 +36,9 @@
 }
 
 .cardnote-footer {
-    width: 100%;
-    position: relative;
-justify-content: center;
+  width: 100%;
+  position: relative;
+  justify-content: center;
   display: flex;
   height: 40px;
   color: #242424;
@@ -77,14 +77,18 @@ justify-content: center;
   opacity: 1;
 }
 
-.archive-icon-delete{
-    display: flex;
-    position: relative;
-    flex-direction: row;
-    cursor: pointer;
+.archive-icon-delete {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  cursor: pointer;
 }
 
 .archive-icon-delete:hover .tooltip {
-    visibility: visible;
-    opacity: 1;
-  }
+  visibility: visible;
+  opacity: 1;
+}
+
+.cardnote-link-to-edit {
+  color : black;
+}

@@ -85,7 +85,7 @@ export const IconUnarchived = ({ width, height, strokeWidth }) => (
     width={width || 24}
     height={height || 24}
     viewBox="0 0 24 24"
-    strokeWidth={strokeWidth||2}
+    strokeWidth={strokeWidth || 2}
     stroke="currentColor"
     fill="none"
     strokeLinecap="round"
@@ -96,5 +96,25 @@ export const IconUnarchived = ({ width, height, strokeWidth }) => (
     <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 1.824 -1.18m.176 -3.82v-7" />
     <path d="M10 12h2" />
     <path d="M3 3l18 18" />
+  </svg>
+);
+
+export const EditIcon = ({ width, height, strokeWidth }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="icon icon-tabler icon-tabler-edit"
+    width={width || 24}
+    height={height || 24}
+    viewBox="0 0 24 24"
+    strokeWidth={strokeWidth || 2}
+    stroke="currentColor"
+    fill="none"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+    <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+    <path d="M16 5l3 3" />
   </svg>
 );

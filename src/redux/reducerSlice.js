@@ -1,17 +1,32 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 const { VITE_URL_BACKEND } = import.meta.env;
 
+const initialState={
+  notes: []
+}
 //thunk for async functions
 export const getNotesAsync = createAsyncThunk(
   "notes/getNotesAsync",
-  async () => {
+  async () => { 
     const request = await fetch(`${VITE_URL_BACKEND}/notes`, {
+      method: "GET",
+    });
+    const response = await request.json();
+    return  response;
+  }
+);
+
+export const getNoteByIdAsync = createAsyncThunk(
+  "notes/getNoteByIdAsync",
+  async (id) => {
+    const request = await fetch(`${VITE_URL_BACKEND}/notes/${id}`, {
       method: "GET",
     });
     const response = await request.json();
     return response;
   }
 );
+
 export const noteAddAsync = createAsyncThunk(
   "notes/noteAddAsync",
   async (noteData) => {
@@ -22,8 +37,12 @@ export const noteAddAsync = createAsyncThunk(
       },
       body: JSON.stringify(noteData),
     });
+    if (request.status !== 200) {
+      return null 
+    } else {
     const response = await request.json();
     return response;
+    }
   }
 );
 
@@ -35,6 +54,7 @@ export const noteDeleteAsync = createAsyncThunk(
     });
     if (request.status === 200) {
       return noteData;
+
     }
   }
 );
@@ -49,40 +69,63 @@ export const noteUpdateAsync = createAsyncThunk(
       },
       body: JSON.stringify(noteData),
     });
-    if(request.status ===200){
-      return noteData.id
+    if (request.status === 200) {
+      return noteData.id;
     }
   }
 );
 
 export const noteSlice = createSlice({
   name: "notes",
-  initialState: [],
+  initialState,
   reducers: {
+    noteAdd: (state, action)=>{
+      state.notes.push(action.payload)
+    },
+    noteDelete: (state,action)=>{
+      const noteForDelete = state.notes.find((notes)=> notes.id === action.payload)
+      if(noteForDelete){
+        return state.notes.filter((notes)=>notes.id !== action.payload)
+      }
+    },
+    noteUpdate: (state, action)=>{
+    const updateNote = state.notes.find((note)=> note.id == action.payload.id)
+    if(updateNote){
+      updateNote.archived = action.payload.archived,
+      updateNote.title = action.payload.title,
+      updateNote.content = action.payload.content,
+      updateNote.tags = action.payload.tags
+    }
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(noteAddAsync.fulfilled, (state, action) => {
-        state.push(action.payload);
+        if(action.payload === null){
+          return;
+        } else{
+          state.notes.push(action.payload);
+        }
       })
       .addCase(noteAddAsync.rejected, (state, action) => {
         console.error("Error adding note:", action.error);
       })
       .addCase(noteDeleteAsync.fulfilled, (state, action) => {
         const noteIdToDelete = action.payload;
-        return state.filter((note) => note.id !== noteIdToDelete);
+        const filtered = state.notes.filter((note) => note.id !== noteIdToDelete);
+        state.notes = filtered
       })
       .addCase(noteDeleteAsync.rejected, (state, action) => {
         console.error("Error adding note:", action.error);
       })
       .addCase(getNotesAsync.fulfilled, (state, action) => {
-        state.push(...action.payload);
+        state.notes = [...action.payload]
       })
       .addCase(getNotesAsync.rejected, (state, action) => {
         console.error("Error adding note:", action.error);
       })
       .addCase(noteUpdateAsync.fulfilled, (state, action) => {
-        const foundNote = state.find((notes) => notes.id === action.payload);
+        const foundNote = state.notes.find((notes) => notes.id === action.payload);
         if (foundNote) {
           foundNote.archived = !foundNote.archived;
         }
@@ -93,5 +136,5 @@ export const noteSlice = createSlice({
   },
 });
 
-export const { noteAdd, noteDelete, noteArchive } = noteSlice.actions;
+export const { noteAdd, noteDelete, noteUpdate } = noteSlice.actions;
 export default noteSlice.reducer;

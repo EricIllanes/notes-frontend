@@ -8,16 +8,13 @@ import { IconArchive, IconUnarchived } from "../assets/icons";
 import { getNotesAsync } from "../redux/reducerSlice";
 
 export default function HomePage() {
-
-  const { notes } = useSelector((state) => state);
+  const { notes } = useSelector((state) => state.notes);
   const [showArchived, setShowArchived] = useState(false);
-  const dispatch = useDispatch()
-  const nonArchived = notes?.filter((note) => !note.archived);
-  const archivedOnes = notes?.filter((note) => note.archived);
-  useEffect(()=>{
-  dispatch(getNotesAsync())
-  }, [])
-
+  const dispatch = useDispatch();
+  const nonArchived =
+    notes?.length > 0 ? notes?.filter((note) => !note.archived) : [];
+  const archivedOnes =
+    notes?.length > 0 ? notes?.filter((note) => note.archived) : [];
   const handleToggleView = () => {
     setShowArchived(!showArchived);
   };
@@ -26,15 +23,16 @@ export default function HomePage() {
     <main className="homepage-container">
       <NavBar />
       <FormNotes />
-      {showArchived ?
-        <button onClick={handleToggleView}
-        className="homepage-buttonarchived"
-        >Show non-archived notes <IconUnarchived /></button>
-    :
-    <button onClick={handleToggleView}
-    className="homepage-buttonarchived"
-    > Show archived notes <IconArchive /></button>
-    }
+      {showArchived ? (
+        <button onClick={handleToggleView} className="homepage-buttonarchived">
+          Show non-archived notes <IconUnarchived />
+        </button>
+      ) : (
+        <button onClick={handleToggleView} className="homepage-buttonarchived">
+          {" "}
+          Show archived notes <IconArchive />
+        </button>
+      )}
       <div className="homepage-grid-notes">
         {showArchived
           ? archivedOnes?.map((note) => (
