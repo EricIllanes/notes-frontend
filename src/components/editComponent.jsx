@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { getNoteByIdAsync, getNotesAsync, noteUpdate, noteUpdateAsync } from "../redux/reducerSlice";
-
+import { noteUpdate } from "../redux/reducerSlice";
 import "../styles/editComponent.css";
-import NavBar from "./navBar";
 
 export default function EditNote() {
   const navigate = useNavigate();
@@ -16,19 +14,19 @@ export default function EditNote() {
     content: "",
   });
   const [tags, setTags] = useState([]);
-  const {notes} = useSelector(state=>state.notes)
+  const { notes } = useSelector((state) => state.notes);
 
-useEffect(()=>{
-  if(notes.length != 0){
-    const noteFind = notes.find((note)=> note.id == id)
-    if(noteFind){
-      note.content = noteFind.content,
-      note.title=noteFind.title,
-      note.archived=noteFind.archived,
-      setTags(noteFind.tags)
+  useEffect(() => {
+    if (notes.length != 0) {
+      const noteFind = notes.find((note) => note.id == id);
+      if (noteFind) {
+        (note.content = noteFind.content),
+          (note.title = noteFind.title),
+          (note.archived = noteFind.archived),
+          setTags(noteFind.tags);
+      }
     }
-  }
-}, [])
+  }, []);
 
   function handleChange(event) {
     event.preventDefault();
@@ -44,12 +42,14 @@ useEffect(()=>{
   }
   function handleSubmit(event) {
     event.preventDefault();
-    dispatch(noteUpdate({
-              id,
+    dispatch(
+      noteUpdate({
+        id,
         archived: false,
         tags: tags,
         ...note,
-    }))
+      })
+    );
     navigate("/");
   }
   function handleCancel() {
@@ -57,9 +57,7 @@ useEffect(()=>{
   }
   if (note?.title) {
     return (
-
       <div className="editcomponent-container">
-              {/* <NavBar /> */}
         <form
           className="formnote-form"
           onSubmit={(event) => {

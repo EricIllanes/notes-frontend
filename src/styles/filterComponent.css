@@ -1,0 +1,14 @@
+.filter-container{
+    display: flex;
+    margin: 10px;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+}
+
+.filter-button{
+background-color: white;
+margin-inline: 5px;
+cursor: pointer;
+border-color: transparent;
+}

@@ -7,13 +7,7 @@ import {
   IconUnarchived,
 } from "../assets/icons";
 import "../styles/cardNote.css";
-import {
-  getNotesAsync,
-  noteUpdate,
-  noteDelete,
-  noteDeleteAsync,
-  noteUpdateAsync,
-} from "../redux/reducerSlice";
+import { noteUpdate, noteDelete, noteFiltered } from "../redux/reducerSlice";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -22,11 +16,9 @@ export default function CardNotes({ title, content, tags, id, archived }) {
     truncatedText();
   });
   const dispatch = useDispatch();
-
   function handleClick(action) {
     if (action === "delete") {
-      dispatch(noteDelete(id))
-      // dispatch(noteDeleteAsync(id));
+      dispatch(noteDelete(id));
     } else if (action === "archive") {
       const infoNote = {
         title,
@@ -35,22 +27,38 @@ export default function CardNotes({ title, content, tags, id, archived }) {
         tags,
         archived: !archived,
       };
-      dispatch(noteUpdate(infoNote))
-      // dispatch(noteUpdateAsync(infoNote));
+      dispatch(noteUpdate(infoNote));
     }
   }
+  const coloresPasteles = [
+    '#FFD1DC', // Rosa pálido
+    '#FFECB3', // Amarillo pastel
+    '#B2DFDB', // Verde menta
+    '#FFC0CB', // Rosa claro
+    '#D8BFD8', // Lila pálido
+    '#FFDAB9', // Melocotón claro
+    '#C1E1A3', // Verde claro
+    '#FFD700', // Amarillo claro
+    '#98FB98', // Verde almendra
+    '#87CEEB'  // Azul cielo
+  ];
+  
 
   function truncatedText() {
     const titleCard = document.querySelector(".cardnote-title");
 
-    if (titleCard && titleCard.textContent.length > 20) {
-      const truncatedTitle = titleCard.textContent.substring(0, 23) + "...";
+    if (titleCard && titleCard.textContent.length > 10) {
+      const truncatedTitle = titleCard.textContent.substring(0, 9) + "...";
       titleCard.textContent = truncatedTitle;
     }
   }
 
+  function handleFilter(tag) {
+    dispatch(noteFiltered(tag));
+  }
+
   return (
-    <main className="cardnote-container">
+    <main className="cardnote-container" style={{backgroundColor: coloresPasteles[(Math.floor(Math.random()*10))] }}>
       <section className="cardnote-header">
         <h3 className="cardnote-title">{title}</h3>
         <div className="archive-icon-delete">
@@ -77,7 +85,14 @@ export default function CardNotes({ title, content, tags, id, archived }) {
         <IconTag width={24} height={24} />
         {tags?.map((tag, index) => (
           <span key={index}>
-            <a className="cardnote-tags">{tag.toLowerCase()}</a>
+            <a
+              className="cardnote-tags"
+              onClick={() => {
+                handleFilter(tag);
+              }}
+            >
+              {tag.toLowerCase()}
+            </a>
           </span>
         ))}
         {archived === false ? (
@@ -90,7 +105,7 @@ export default function CardNotes({ title, content, tags, id, archived }) {
             >
               <IconArchive />
             </a>
-            <div className="tooltip">Archivar</div>
+            <div className="tooltip">Archive</div>
           </div>
         ) : (
           <div className="archive-icon-container">
@@ -102,7 +117,7 @@ export default function CardNotes({ title, content, tags, id, archived }) {
             >
               <IconUnarchived />
             </a>
-            <div className="tooltip">Desarchivar</div>
+            <div className="tooltip">Unarchive</div>
           </div>
         )}
       </section>
